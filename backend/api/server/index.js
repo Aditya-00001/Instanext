@@ -11,7 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
+app.get("/api/health",(req,res)=> {
+    res.status(200).send("API is healthy");
+});
 
 app.get('/', (req, res) => res.send('API running...'));
 

@@ -1,7 +1,9 @@
 import express from "express";
-import {profile} from "../users/user.js";
+import { accountInfo, follow, unfollow } from "../users/user.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 const router = express.Router();
 
-router.get("/me", authMiddleware, profile);
+router.get("/me", authMiddleware, accountInfo);
+router.post("/:id/follow", authMiddleware, follow);
+router.post("/:id/unfollow", authMiddleware, unfollow);
 export default router;

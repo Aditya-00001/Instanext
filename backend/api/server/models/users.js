@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     followersCount: { type: Number, default: 0 },
     avatarUrl:{type: String},
+    isVerified:{type: Boolean, default: false},
     createdAt:{type: Date, default: Date.now},
 });
 const User = mongoose.model("User", userSchema);
