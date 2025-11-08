@@ -9,7 +9,7 @@ const registerUser = async (req, res) => {
     const { name, email, password, userID } = req.body;
 
     if (!name || !email || !password || !userID) {
-      return res.status(400).json({ message: 'All fields are required' });
+      return res.status(400).json({ message: 'A ll fields are required' });
     }
 
     const existingUserID = await User.findOne({ userID });
@@ -25,7 +25,7 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      userid: userID,
+      userID: userID,
       name,
       email,
       password: hashedPassword,
@@ -42,7 +42,7 @@ const registerUser = async (req, res) => {
         id: newUser._id,
         name: newUser.name,
         email: newUser.email,
-        userID: newUser.userid,
+        userID: newUser.userID,
       },
     });
 
@@ -69,7 +69,10 @@ const loginUser = async(req, res) => {
         if(!isMatch){
             return res.status(401).json({message: 'Invalid credentials'});
         }
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
+        const token = jwt.sign(
+          {id: user._id, email: user.email, userID: user.userID}, 
+          process.env.JWT_SECRET, 
+          {expiresIn: '7d'});
 
         res.status(200).json({
             message: 'Login successful',
@@ -77,7 +80,8 @@ const loginUser = async(req, res) => {
             user:{
                 id: user._id,
                 name: user.name,
-                userID: user.userid,
+                email: user.email,
+                userID: user.userID,
             }
         });
     }catch(error){
@@ -86,4 +90,14 @@ const loginUser = async(req, res) => {
     }
 };
 
-export { registerUser, loginUser };
+const userIDExists = async(req,res) => {
+  try {
+    const {userID} = req.query;
+    const user = await User.findOne({userID});
+    return res.json({exists: !!user});
+  } catch (error) {
+    console.error('Error checking userID existence:', error);
+    return res.status(500).json({message: 'Server error'});
+  }
+};
+export { registerUser, loginUser, userIDExists };

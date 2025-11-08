@@ -1,11 +1,15 @@
 import jwt from 'jsonwebtoken';
 
-export const authMiddleware = (req, res, next) => {
+const authMiddleware = (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
     if (!token){
         return res.status(401).json({ message: "Access denied. Token missing" });
+    }
+
+    if (err && err.name === 'TokenExpiredError') {
+    return res.status(401).json({ message: "Token expired" });
     }
 
     jwt.verify(token,process.env.JWT_SECRET,(err,user)=>{
@@ -16,3 +20,4 @@ export const authMiddleware = (req, res, next) => {
         next();
     });
 };
+export default authMiddleware;
