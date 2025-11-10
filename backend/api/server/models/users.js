@@ -13,7 +13,10 @@ const userSchema = new mongoose.Schema({
     followersCount: { type: Number, default: 0 },
     avatarUrl:{type: String},
     isVerified:{type: Boolean, default: false},
+    verificationToken:{type: String},
+    verificationTokenExpiry:{type: Date},
     createdAt:{type: Date, default: Date.now},
+    verifiedAt:{type: Date},
 });
 const User = mongoose.model("User", userSchema);
 export default User;
