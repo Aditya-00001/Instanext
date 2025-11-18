@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+//Conatins schema and model for User
 const userSchema = new mongoose.Schema({
     userID:{type: String, required: true, unique: true},
     name:{type: String, required: true},
@@ -11,16 +11,11 @@ const userSchema = new mongoose.Schema({
     followingCount: { type: Number, default: 0 },
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     followersCount: { type: Number, default: 0 },
-    avatarUrl:{type: String},
     isVerified:{type: Boolean, default: false},
     verificationToken:{type: String},
     verificationTokenExpires:{type: Date},
-    createdAt:{type: Date, default: Date.now},
-    verifiedAt:{type: Date},
     }, 
-    { 
-        timestamps: true 
-    }
+    { timestamps: true }
 );
 
 

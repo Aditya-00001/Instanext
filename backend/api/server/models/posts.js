@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+//contains schema and model for Post
 const postSchema = new mongoose.Schema({
     author : {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     mediaUrl : {type: String, required: true},
@@ -11,8 +11,6 @@ const postSchema = new mongoose.Schema({
     likedBy : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     commentsCount : {type: Number, default: 0},
-    createdAt : {type: Date, default: Date.now},
-    updatedAt: {type:Date, default:Date.now}
 }, { timestamps: true });
 
 const Post = mongoose.model("Post",postSchema);

@@ -2,7 +2,7 @@ import User from "../models/users.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
-
+// Contains operations related to user profiles, following, and unfollowing.
 const accountInfo = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");

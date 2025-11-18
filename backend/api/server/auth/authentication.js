@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 dotenv.config();
-
+//contains operations related to user registration, login, id existence check, email verification, and resending verification emails.
 const registerUser = async (req, res) => {
   try {
     const { name, email, password, userID } = req.body;
